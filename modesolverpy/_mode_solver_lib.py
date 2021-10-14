@@ -246,7 +246,7 @@ class _ModeSolverSemiVectorial():
         eigs = eigen.eigs(A,
                           k=neigs,
                           which='LR',
-                          tol=0.001,
+                          tol=0.0001,
                           ncv=None,
                           v0 = initial_mode_guess,
                           return_eigenvectors=mode_profiles)

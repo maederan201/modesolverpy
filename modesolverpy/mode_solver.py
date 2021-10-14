@@ -230,6 +230,7 @@ class _ModeSolver(with_metaclass(abc.ABCMeta)):
                     title = "$n_{eff}$ vs Wavelength"
                     y_label = "$n_{eff}$"
                 else:
+                    #TODO: Debug the following line
                     title = "n_{effs} vs Wavelength" % x_label
                     y_label = "n_{eff}"
                 self._plot_n_effs(
