@@ -643,7 +643,7 @@ class _ModeSolverVectorial():
         I = numpy.r_[Ixx, Ixy, Iyx, Iyy]
         J = numpy.r_[Jxx, Jxy, Jyx, Jyy]
         V = numpy.r_[Vxx, Vxy, Vyx, Vyy]
-        A = coo_matrix((V, (I, J))).tocsr()
+        A = coo_matrix((V, (I, J))).todense()
 
         return A
 
