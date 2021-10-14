@@ -19,7 +19,7 @@ import scipy.optimize
 
 import collections as col
 
-from _pythran_lib import centered1d
+from . import _pythran_lib as pytl
 
 def trapz2(f, x=None, y=None, dx=1.0, dy=1.0):
     """Double integrate."""
@@ -1034,8 +1034,8 @@ class FDMode():
         })
 
     def norm(self):
-        x = centered1d(self.x)
-        y = centered1d(self.y)
+        x = pytl.centered1d(self.x)
+        y = pytl.centered1d(self.y)
         return scipy.sqrt(trapz2(self.intensity(), x=x, y=y))
 
     def normalize(self):
@@ -1055,8 +1055,8 @@ class FDMode():
         if x is None and y is None:
             return (I_TE, I_TM)
         else:
-            x0 = centered1d(self.x)
-            y0 = centered1d(self.y)
+            x0 = pytl.centered1d(self.x)
+            y0 = pytl.centered1d(self.y)
             I_TE_ = interp2(x, y, x0, y0, I_TE)
             I_TM_ = interp2(x, y, x0, y0, I_TM)
             return (I_TE_, I_TM_)
