@@ -25,8 +25,7 @@ def trapz2(f, x=None, y=None, dx=1.0, dy=1.0):
     """Double integrate."""
     return numpy.trapz(numpy.trapz(f, x=y, dx=dy), x=x, dx=dx)
 
-def centered2d(x):
-    return (x[1:, 1:] + x[1:, :-1] + x[:-1, 1:] + x[:-1, :-1]) / 4.
+
 
 class _ModeSolverSemiVectorial():
     """
@@ -915,9 +914,9 @@ class _ModeSolverVectorial():
             v = n.reshape(nx, ny)[:-1, :-1]
 
             # in xc e yc
-            Dx = neff * centered2d(Hy) + (
+            Dx = neff * pytl.centered2d(Hy) + (
                 Hz[:-1, 1:] + Hz[1:, 1:] - Hz[:-1, :-1] - Hz[1:, :-1]) / (2j * k * v)
-            Dy = -neff * centered2d(Hx) - (
+            Dy = -neff * pytl.centered2d(Hx) - (
                 Hz[1:, :-1] + Hz[1:, 1:] - Hz[:-1, 1:] - Hz[:-1, :-1]) / (2j * k * h)
             Dz = ((Hy[1:, :-1] + Hy[1:, 1:] - Hy[:-1, 1:] - Hy[:-1, :-1]) / (2 * h) -
                   (Hx[:-1, 1:] + Hx[1:, 1:] - Hx[:-1, :-1] - Hx[1:, :-1]) / (2 * v)) / (1j * k)
@@ -1056,8 +1055,8 @@ class FDMode():
         return self
 
     def intensityTETM(self, x=None, y=None):
-        I_TE = self.Ex * centered2d(numpy.conj(self.Hy)) / 2.
-        I_TM = -self.Ey * centered2d(numpy.conj(self.Hx)) / 2.
+        I_TE = self.Ex * pytl.centered2d(numpy.conj(self.Hy)) / 2.
+        I_TM = -self.Ey * pytl.centered2d(numpy.conj(self.Hx)) / 2.
         if x is None and y is None:
             return (I_TE, I_TM)
         else:
