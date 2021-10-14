@@ -5,3 +5,5 @@ def centered1d(x):
 #pythran export centered2d(complex128[][])
 def centered2d(x):
     return (x[1:, 1:] + x[1:, :-1] + x[:-1, 1:] + x[:-1, :-1]) / 4.
+    
+

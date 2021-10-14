@@ -647,6 +647,7 @@ class _ModeSolverVectorial():
 
         return A
 
+    
     def compute_other_fields(self, neffs, Hxs, Hys):
 
         from scipy.sparse import coo_matrix
@@ -1064,6 +1065,7 @@ class FDMode():
         else:
             x0 = pytl.centered1d(self.x)
             y0 = pytl.centered1d(self.y)
+            #TODO: Unclear what this function is?
             I_TE_ = interp2(x, y, x0, y0, I_TE)
             I_TM_ = interp2(x, y, x0, y0, I_TM)
             return (I_TE_, I_TM_)
