@@ -230,8 +230,8 @@ class _ModeSolverSemiVectorial():
         J = numpy.r_[iall, i_e, i_w, i_n, i_s]
         V = numpy.r_[Ap[iall], Ae[i_w], Aw[i_e], An[i_s], As[i_n]]
 
-        A = coo_matrix((V, (I, J))).tocsr()
-
+        # A = coo_matrix((V, (I, J))).tocsr()
+        A = coo_matrix((V, (I, J))).tocsc()
         return A
 
     def solve(self, neigs, tol=0, mode_profiles=True, initial_mode_guess=None):
