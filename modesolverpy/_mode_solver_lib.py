@@ -127,18 +127,18 @@ class _ModeSolverSemiVectorial():
         ones_nx = numpy.ones((nx, 1))
         ones_ny = numpy.ones((1, ny))
 
-        n = numpy.dot(ones_nx, 0.5 * (dy[:, 2:] + dy[:, 1:-1])).flatten()
-        s = numpy.dot(ones_nx, 0.5 * (dy[:, 0:-2] + dy[:, 1:-1])).flatten()
-        e = numpy.dot(0.5 * (dx[2:, :] + dx[1:-1, :]), ones_ny).flatten()
-        w = numpy.dot(0.5 * (dx[0:-2, :] + dx[1:-1, :]), ones_ny).flatten()
-        p = numpy.dot(dx[1:-1, :], ones_ny).flatten()
-        q = numpy.dot(ones_nx, dy[:, 1:-1]).flatten()
+        n = numpy.dot(ones_nx, 0.5 * (dy[:, 2:] + dy[:, 1:-1])).ravel()
+        s = numpy.dot(ones_nx, 0.5 * (dy[:, 0:-2] + dy[:, 1:-1])).ravel()
+        e = numpy.dot(0.5 * (dx[2:, :] + dx[1:-1, :]), ones_ny).ravel()
+        w = numpy.dot(0.5 * (dx[0:-2, :] + dx[1:-1, :]), ones_ny).ravel()
+        p = numpy.dot(dx[1:-1, :], ones_ny).ravel()
+        q = numpy.dot(ones_nx, dy[:, 1:-1]).ravel()
 
-        en = eps[1:-1, 2:].flatten()
-        es = eps[1:-1, 0:-2].flatten()
-        ee = eps[2:, 1:-1].flatten()
-        ew = eps[0:-2, 1:-1].flatten()
-        ep = eps[1:-1, 1:-1].flatten()
+        en = eps[1:-1, 2:].ravel()
+        es = eps[1:-1, 0:-2].ravel()
+        ee = eps[2:, 1:-1].ravel()
+        ew = eps[0:-2, 1:-1].ravel()
+        ep = eps[1:-1, 1:-1].ravel()
 
         # three methods: Ex, Ey and scalar
 
@@ -222,11 +222,11 @@ class _ModeSolverSemiVectorial():
         # else:
         #     raise ValueError('unknown boundary')
 
-        iall = ii.flatten()
-        i_n = ii[:, 1:].flatten()
-        i_s = ii[:, :-1].flatten()
-        i_e = ii[1:, :].flatten()
-        i_w = ii[:-1, :].flatten()
+        iall = ii.ravel()
+        i_n = ii[:, 1:].ravel()
+        i_s = ii[:, :-1].ravel()
+        i_e = ii[1:, :].ravel()
+        i_w = ii[:-1, :].ravel()
 
         I = numpy.r_[iall, i_w, i_e, i_s, i_n]
         J = numpy.r_[iall, i_e, i_w, i_n, i_s]
@@ -378,35 +378,35 @@ class _ModeSolverVectorial():
         ones_nx = numpy.ones((nx, 1))
         ones_ny = numpy.ones((1, ny))
 
-        n = numpy.dot(ones_nx, dy[:, 1:]).flatten()
-        s = numpy.dot(ones_nx, dy[:, :-1]).flatten()
-        e = numpy.dot(dx[1:, :], ones_ny).flatten()
-        w = numpy.dot(dx[:-1, :], ones_ny).flatten()
+        n = numpy.dot(ones_nx, dy[:, 1:]).ravel()
+        s = numpy.dot(ones_nx, dy[:, :-1]).ravel()
+        e = numpy.dot(dx[1:, :], ones_ny).ravel()
+        w = numpy.dot(dx[:-1, :], ones_ny).ravel()
 
-        exx1 = epsxx[:-1, 1:].flatten()
-        exx2 = epsxx[:-1, :-1].flatten()
-        exx3 = epsxx[1:, :-1].flatten()
-        exx4 = epsxx[1:, 1:].flatten()
+        exx1 = epsxx[:-1, 1:].ravel()
+        exx2 = epsxx[:-1, :-1].ravel()
+        exx3 = epsxx[1:, :-1].ravel()
+        exx4 = epsxx[1:, 1:].ravel()
 
-        eyy1 = epsyy[:-1, 1:].flatten()
-        eyy2 = epsyy[:-1, :-1].flatten()
-        eyy3 = epsyy[1:, :-1].flatten()
-        eyy4 = epsyy[1:, 1:].flatten()
+        eyy1 = epsyy[:-1, 1:].ravel()
+        eyy2 = epsyy[:-1, :-1].ravel()
+        eyy3 = epsyy[1:, :-1].ravel()
+        eyy4 = epsyy[1:, 1:].ravel()
 
-        exy1 = epsxy[:-1, 1:].flatten()
-        exy2 = epsxy[:-1, :-1].flatten()
-        exy3 = epsxy[1:, :-1].flatten()
-        exy4 = epsxy[1:, 1:].flatten()
+        exy1 = epsxy[:-1, 1:].ravel()
+        exy2 = epsxy[:-1, :-1].ravel()
+        exy3 = epsxy[1:, :-1].ravel()
+        exy4 = epsxy[1:, 1:].ravel()
 
-        eyx1 = epsyx[:-1, 1:].flatten()
-        eyx2 = epsyx[:-1, :-1].flatten()
-        eyx3 = epsyx[1:, :-1].flatten()
-        eyx4 = epsyx[1:, 1:].flatten()
+        eyx1 = epsyx[:-1, 1:].ravel()
+        eyx2 = epsyx[:-1, :-1].ravel()
+        eyx3 = epsyx[1:, :-1].ravel()
+        eyx4 = epsyx[1:, 1:].ravel()
 
-        ezz1 = epszz[:-1, 1:].flatten()
-        ezz2 = epszz[:-1, :-1].flatten()
-        ezz3 = epszz[1:, :-1].flatten()
-        ezz4 = epszz[1:, 1:].flatten()
+        ezz1 = epszz[:-1, 1:].ravel()
+        ezz2 = epszz[:-1, :-1].ravel()
+        ezz3 = epszz[1:, :-1].ravel()
+        ezz4 = epszz[1:, 1:].ravel()
 
         ns21 = n * eyy2 + s * eyy1
         ns34 = n * eyy3 + s * eyy4
@@ -608,15 +608,15 @@ class _ModeSolverVectorial():
 
         # Assemble sparse matrix
 
-        iall = ii.flatten()
-        i_s = ii[:, :-1].flatten()
-        i_n = ii[:, 1:].flatten()
-        i_e = ii[1:, :].flatten()
-        i_w = ii[:-1, :].flatten()
-        i_ne = ii[1:, 1:].flatten()
-        i_se = ii[1:, :-1].flatten()
-        i_sw = ii[:-1, :-1].flatten()
-        i_nw = ii[:-1, 1:].flatten()
+        iall = ii.ravel()
+        i_s = ii[:, :-1].ravel()
+        i_n = ii[:, 1:].ravel()
+        i_e = ii[1:, :].ravel()
+        i_w = ii[:-1, :].ravel()
+        i_ne = ii[1:, 1:].ravel()
+        i_se = ii[1:, :-1].ravel()
+        i_sw = ii[:-1, :-1].ravel()
+        i_nw = ii[:-1, 1:].ravel()
 
         Ixx = numpy.r_[iall, i_w, i_e, i_s, i_n, i_ne, i_se, i_sw, i_nw]
         Jxx = numpy.r_[iall, i_e, i_w, i_n, i_s, i_sw, i_nw, i_ne, i_se]
@@ -693,35 +693,35 @@ class _ModeSolverVectorial():
             ones_nx = numpy.ones((nx, 1))
             ones_ny = numpy.ones((1, ny))
 
-            n = numpy.dot(ones_nx, dy[:, 1:]).flatten()
-            s = numpy.dot(ones_nx, dy[:, :-1]).flatten()
-            e = numpy.dot(dx[1:, :], ones_ny).flatten()
-            w = numpy.dot(dx[:-1, :], ones_ny).flatten()
+            n = numpy.dot(ones_nx, dy[:, 1:]).ravel()
+            s = numpy.dot(ones_nx, dy[:, :-1]).ravel()
+            e = numpy.dot(dx[1:, :], ones_ny).ravel()
+            w = numpy.dot(dx[:-1, :], ones_ny).ravel()
 
-            exx1 = epsxx[:-1, 1:].flatten()
-            exx2 = epsxx[:-1, :-1].flatten()
-            exx3 = epsxx[1:, :-1].flatten()
-            exx4 = epsxx[1:, 1:].flatten()
+            exx1 = epsxx[:-1, 1:].ravel()
+            exx2 = epsxx[:-1, :-1].ravel()
+            exx3 = epsxx[1:, :-1].ravel()
+            exx4 = epsxx[1:, 1:].ravel()
 
-            eyy1 = epsyy[:-1, 1:].flatten()
-            eyy2 = epsyy[:-1, :-1].flatten()
-            eyy3 = epsyy[1:, :-1].flatten()
-            eyy4 = epsyy[1:, 1:].flatten()
+            eyy1 = epsyy[:-1, 1:].ravel()
+            eyy2 = epsyy[:-1, :-1].ravel()
+            eyy3 = epsyy[1:, :-1].ravel()
+            eyy4 = epsyy[1:, 1:].ravel()
 
-            exy1 = epsxy[:-1, 1:].flatten()
-            exy2 = epsxy[:-1, :-1].flatten()
-            exy3 = epsxy[1:, :-1].flatten()
-            exy4 = epsxy[1:, 1:].flatten()
+            exy1 = epsxy[:-1, 1:].ravel()
+            exy2 = epsxy[:-1, :-1].ravel()
+            exy3 = epsxy[1:, :-1].ravel()
+            exy4 = epsxy[1:, 1:].ravel()
 
-            eyx1 = epsyx[:-1, 1:].flatten()
-            eyx2 = epsyx[:-1, :-1].flatten()
-            eyx3 = epsyx[1:, :-1].flatten()
-            eyx4 = epsyx[1:, 1:].flatten()
+            eyx1 = epsyx[:-1, 1:].ravel()
+            eyx2 = epsyx[:-1, :-1].ravel()
+            eyx3 = epsyx[1:, :-1].ravel()
+            eyx4 = epsyx[1:, 1:].ravel()
 
-            ezz1 = epszz[:-1, 1:].flatten()
-            ezz2 = epszz[:-1, :-1].flatten()
-            ezz3 = epszz[1:, :-1].flatten()
-            ezz4 = epszz[1:, 1:].flatten()
+            ezz1 = epszz[:-1, 1:].ravel()
+            ezz2 = epszz[:-1, :-1].ravel()
+            ezz3 = epszz[1:, :-1].ravel()
+            ezz4 = epszz[1:, 1:].ravel()
 
             b = neff * k
 
@@ -868,15 +868,15 @@ class _ModeSolverVectorial():
 
             # Assemble sparse matrix
 
-            iall = ii.flatten()
-            i_s = ii[:, :-1].flatten()
-            i_n = ii[:, 1:].flatten()
-            i_e = ii[1:, :].flatten()
-            i_w = ii[:-1, :].flatten()
-            i_ne = ii[1:, 1:].flatten()
-            i_se = ii[1:, :-1].flatten()
-            i_sw = ii[:-1, :-1].flatten()
-            i_nw = ii[:-1, 1:].flatten()
+            iall = ii.ravel()
+            i_s = ii[:, :-1].ravel()
+            i_n = ii[:, 1:].ravel()
+            i_e = ii[1:, :].ravel()
+            i_w = ii[:-1, :].ravel()
+            i_ne = ii[1:, 1:].ravel()
+            i_se = ii[1:, :-1].ravel()
+            i_sw = ii[:-1, :-1].ravel()
+            i_nw = ii[:-1, 1:].ravel()
 
             Izx = numpy.r_[iall, i_w, i_e, i_s, i_n, i_ne, i_se, i_sw, i_nw]
             Jzx = numpy.r_[iall, i_e, i_w, i_n, i_s, i_sw, i_nw, i_ne, i_se]
