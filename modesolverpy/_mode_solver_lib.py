@@ -19,12 +19,11 @@ import scipy.optimize
 
 import collections as col
 
+from _pythran_lib import centered1d
+
 def trapz2(f, x=None, y=None, dx=1.0, dy=1.0):
     """Double integrate."""
     return numpy.trapz(numpy.trapz(f, x=y, dx=dy), x=x, dx=dx)
-
-def centered1d(x):
-    return (x[1:] + x[:-1]) / 2.
 
 def centered2d(x):
     return (x[1:, 1:] + x[1:, :-1] + x[:-1, 1:] + x[:-1, :-1]) / 4.
