@@ -77,7 +77,7 @@ class RidgeWaveguide(sb.Slabs):
 
 class WgArray(sb.Slabs):
     def __init__(self, wavelength, x_step, y_step, wg_height, wg_widths, wg_gaps, sub_height,
-                 sub_width, clad_height, n_sub, n_wg, angles=None, n_clad=mat.Air().n()):
+                 sub_width, clad_height, n_sub, n_wg, angles=None, n_clad=mat.Air().n(),film_thickness='wg_height'):
         sb.Slabs.__init__(self, wavelength, y_step, x_step, sub_width)
 
         try:
@@ -94,12 +94,18 @@ class WgArray(sb.Slabs):
         wg_gaps_pad.append(0.)
 
         self.add_slab(sub_height, n_sub)
+        if film_thickness != 'wg_height' and film_thickness != wg_height:
+            assert film_thickness > 0., 'Film must have some thickness to it.'
+            assert wg_height <= film_thickness, 'Waveguide can\'t be thicker than the film.'
+            self.add_slab(film_thickness-wg_height, n_wg)
+
 
         k = self.add_slab(wg_height, n_clad)
         air_width_l_r = 0.5*(sub_width - np.sum(wg_widths) - np.sum(wg_gaps))
         position = air_width_l_r
 
         for wg_width, wg_gap, angle in zip(wg_widths, wg_gaps_pad, angles):
+            
             self.slabs[k].add_material(position, position + wg_width, n_wg, angle)
 
             position += wg_width + wg_gap
