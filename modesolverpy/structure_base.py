@@ -165,9 +165,14 @@ class _AbstractStructure(with_metaclass(abc.ABCMeta)):
             returns the permittivity profile of the structure,
             interpolating if necessary.
         '''
-        interp_real = interpolate.interp2d(self.x, self.y, self.eps.real)
-        interp_imag = interpolate.interp2d(self.x, self.y, self.eps.imag)
-        interp = lambda x, y: interp_real(x, y) + 1.j*interp_imag(x, y)
+        # interp_real = interpolate.interp2d(self.x, self.y, self.eps.real)
+        # interp_imag = interpolate.interp2d(self.x, self.y, self.eps.imag)
+        # interp = lambda x, y: interp_real(x, y) + 1.j*interp_imag(x, y)
+        # return interp
+        X,Y = np.meshgrid(self.x,self.y)
+        interp_real = interpolate.NearestNDInterpolator((X.flatten(), Y.flatten()), self.eps.real.flatten())
+        interp_imag = interpolate.NearestNDInterpolator((X.flatten(), Y.flatten()), self.eps.imag.flatten())
+        interp = lambda x, y: interp_real(np.meshgrid(x,y)[0], np.meshgrid(x,y)[1]) + 1.j*interp_imag(np.meshgrid(x,y)[0],np.meshgrid(x,y)[1])
         return interp
 
     @property
@@ -177,7 +182,11 @@ class _AbstractStructure(with_metaclass(abc.ABCMeta)):
             returns the refractive index profile of the structure,
             interpolating if necessary.
         '''
-        return interpolate.interp2d(self.x, self.y, self.n)
+        X,Y = np.meshgrid(self.x,self.y)
+        interp_function = interpolate.NearestNDInterpolator((X.flatten(), Y.flatten()), self.n.flatten())
+        interp = lambda x, y: interp_function(np.meshgrid(x,y)[0], np.meshgrid(x,y)[1]) 
+        return interp
+        # return interpolate.interp2d(self.x, self.y, self.n)
 
     def _add_triangular_sides(self, xy_mask, angle, y_top_right, y_bot_left,
                               x_top_right, x_bot_left, n_material):
