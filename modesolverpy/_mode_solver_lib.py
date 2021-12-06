@@ -1036,12 +1036,12 @@ class FDMode():
 
     def normalize(self):
         n = self.norm()
-        self.Ex /= n
-        self.Ey /= n
-        self.Ez /= n
-        self.Hx /= n
-        self.Hy /= n
-        self.Hz /= n
+        self.Ex = self.Ex/n
+        self.Ey = self.Ey/n
+        self.Ez = self.Ez/n
+        self.Hx = self.Hx/n
+        self.Hy = self.Hy/n
+        self.Hz = self.Hz/n
 
         return self
 
