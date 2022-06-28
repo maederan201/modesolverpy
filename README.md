@@ -1,5 +1,5 @@
 # modesolverpy
-Photonic mode solver with a nice interface and output.
+sPhotonic mode solver with a nice interface and output.
 * semi-vectorial and fully vectorial options,
 * simple structure drawing,
 * automated data saving and plotting via Gnuplot,
